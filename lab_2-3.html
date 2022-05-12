@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/jquery.js"></script>
+  <title>lab2-3</title>
+</head>
+<style>
+  #cat{
+    position: relative;
+    width: 300px;
+  }
+</style>
+<body>
+  <img src="img/cat1.jpg" id="cat" >
+</body>
+<script>
+  let x=0
+  let y=0
+  const cat = $("#cat")
+  $(document).keydown(({code})=>{
+    if(code=="ArrowDown") y+=100
+    if(code=="ArrowUp") y-=100
+    if(code=="ArrowLeft") x-=100
+    if(code=="ArrowRight") x+=100
+    cat.css("margin-left",x).css("margin-top",y)
+  })
+</script>
+</html>
