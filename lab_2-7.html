@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/jquery.js"></script>
+  <title>lab2-7</title>
+</head>
+<body>
+  <input id="line">
+  <button onclick="backspace()"><<</button>
+  <button onclick="reset()">C</button><br>
+  <button onclick="addSymbol(1)">1</button>
+  <button onclick="addSymbol(2)">2</button>
+  <button onclick="addSymbol(3)">3</button>
+  <button onclick="addSymbol('+')">+</button><br>
+  <button onclick="addSymbol(4)">4</button>
+  <button onclick="addSymbol(5)">5</button>
+  <button onclick="addSymbol(6)">6</button>
+  <button onclick="addSymbol('-')">-</button><br>
+  <button onclick="addSymbol(7)">7</button>
+  <button onclick="addSymbol(8)">8</button>
+  <button onclick="addSymbol(9)">9</button>
+  <button onclick="addSymbol('*')">*</button><br>
+  <button onclick="addSymbol(0)">0</button>
+  <button onclick="addSymbol('.')">.</button>
+  <button onclick="solve()">=</button>
+  <button onclick="addSymbol('/')">/</button><br>
+
+</body>
+<script>
+  let line = $("#line")
+  let Line = line[0]
+  const reset = ()=>Line.value = ""
+  const backspace = ()=>Line.value = Line.value.slice(0,-1)
+  function addSymbol(symbol){
+    Line.value = Line.value + symbol
+  }
+  function solve(){
+    let a=Line.value
+    eval("Line.value="+Line.value)
+  }
+  line.on("input",e=>{
+    Line.value = Line.value
+
+    if(Line.value.at(-1) == "=") {
+      backspace()
+      solve()
+    }
+  })
+  $(document).keydown(({key})=>{
+    if(key=="Enter") solve();
+  })
+</script>
+</html>
