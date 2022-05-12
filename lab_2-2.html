@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lab2-2</title>
+    <script src="js/jquery.js"></script>
+    <style>
+      #formData {
+        display: grid;
+        grid-template-columns: 150px 200px;
+      }
+      #formData input {
+        width: 100%;
+      }
+      #error{
+        color: red;
+      }
+      .borderRed{
+        border-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="form">
+      <div id="formData">
+        Ваше имя* <input placeholder="ваше имя" name="name" /> Пароль*
+        <input placeholder="пароль" type="password" name="pw"/> Подтверждение пароля*
+        <input placeholder="подтверждение пароля" type="password" name="pwConfirm" /> email*
+        <input placeholder="email" type="email" name="email" /> сообщение*
+        <textarea name="message" placeholder="сообщение" rows="5"></textarea>
+      </div>
+      <input type="submit" value="отправить">
+      <input type="reset" value="очистить">
+      <pre id="error"></pre>
+    </form>
+  </body>
+  <script>
+    let errors=""
+    const data = {}
+    function resetErrors(){
+      errors = ""
+      $("#error").text(errors)
+      for(let name in data){
+        $(`input[name="${name}"]`).removeClass("borderRed")
+        $(`textarea[name="${name}"]`).removeClass("borderRed")
+      }
+    }
+    function alertError(error,inputName=""){
+      errors+=error+"\n"
+      $("#error").text(errors)
+      if(inputName){
+        $(`input[name="${inputName}"]`).addClass("borderRed")
+        $(`textarea[name="${inputName}"]`).addClass("borderRed")
+      }
+    }
+    $("#form").submit(e=>{
+      e.preventDefault()
+      $("#form").serializeArray()
+        .forEach(({name,value})=>data[name]=value)
+      resetErrors()
+      const {name,pw,pwConfirm,email,message} = data;
+      if(!name) alertError("Имя не заполнено","name")
+      if(pw.length<4) alertError("пароль содержит меньше 4 символов","pw")
+      if(pw!=pwConfirm) alertError("Пароли не совпадают","pwConfirm")
+      if(!/@/.test(email)) alertError("email не содержит @","email")
+      if(message.length<10) alertError("сообщение содержит меньше 10 символов","message")
+    })
+  </script>
+</html>
